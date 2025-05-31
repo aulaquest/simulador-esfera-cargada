@@ -23,82 +23,114 @@
         }
         .simulator-container-main {
             width: 100%;
-            max-width: 900px; /* Ligeramente más estrecho */
+            max-width: 800px; /* Más estrecho para integración tipo Educaplus */
             margin: 0.5em auto; 
-            border: 1px solid #d1d5db; 
-            border-radius: 0.5rem; 
-            background-color: #f9fafb; 
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+            border: 1px solid #b0b8c0; /* Borde un poco más oscuro */
+            border-radius: 0.375rem; /* Bordes menos redondeados */
+            background-color: #fdfdff; /* Fondo casi blanco */
+            box-shadow: 0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.05); 
             overflow: hidden; 
         }
 
-        .simulator-container-main h1.main-title { /* Título principal del simulador */
-            color: #1e3a8a;
-            font-size: 1rem; /* Muy reducido */
+        .simulator-container-main .main-title { 
+            color: #1e293b; /* Azul muy oscuro, casi negro */
+            font-size: 0.9rem; 
             font-weight: 600; 
             text-align: center;
-            padding: 0.5rem; 
-            border-bottom: 1px solid #e5e7eb;
-            background-color: #f3f4f6; 
+            padding: 0.4rem 0.5rem; 
+            border-bottom: 1px solid #d1d5db;
+            background-color: #f0f2f5; 
         }
-        .simulator-container-main h2.section-title { /* Título para el bloque de Controles y Datos */
-            color: #1e40af;
-            font-size: 0.85rem; /* Reducido */
-            font-weight: 600;
-            margin-bottom: 0.5rem; 
-            padding-bottom: 0.3rem;
-            border-bottom: 1px solid #e0e7ff;
+        
+        .controls-data-panel {
+            background-color: #f8f9fa;
+            padding: 0.4rem 0.6rem; /* Padding muy reducido */
+            border-bottom: 1px solid #d1d5db;
+            display: flex;
+            flex-wrap: wrap; /* Para que se apilen en pantallas pequeñas */
+            gap: 0.4rem 0.8rem; /* Espacio entre grupos de control/datos */
+            align-items: center;
         }
-         .simulator-container-main h3.canvas-title { /* Para títulos de los canvas */
-            color: #1d4ed8;
-            font-size: 0.75rem; /* Muy reducido */
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem; /* Espacio entre etiqueta y slider/valor */
+            flex-grow: 1; /* Para que ocupen espacio disponible */
+            min-width: 180px; /* Mínimo ancho para evitar que se aplasten demasiado */
+        }
+        .control-group label, .data-group p {
+            font-size: 0.65rem; /* Muy pequeño */
+            color: #374151;
+            margin-bottom: 0;
+            white-space: nowrap; /* Evitar que la etiqueta se parta */
+        }
+        .control-group input[type="range"] {
+            flex-grow: 1; /* El slider ocupa el resto del espacio */
+            min-width: 60px; /* Mínimo ancho para el slider */
+        }
+        .data-group {
+            display: flex;
+            flex-direction: column; /* Datos uno encima de otro */
+            gap: 0.1rem;
+            background-color: #e9ecef;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            min-width: 120px; /* Ancho mínimo para los datos */
+        }
+        .data-group p {
+             line-height: 1.2; /* Ajustar altura de línea para texto pequeño */
+        }
+
+
+        .simulator-container-main h3.canvas-title { 
+            color: #334155;
+            font-size: 0.7rem; 
             font-weight: 500;
             text-align: center;
-            margin-bottom: 0.2rem; /* Espacio mínimo */
+            margin-bottom: 0.15rem; 
+            padding: 0.1rem;
         }
 
         @media (min-width: 640px) { /* sm */
-            .simulator-container-main h1.main-title { font-size: 1.1rem; padding: 0.6rem; }
-            .simulator-container-main h2.section-title { font-size: 0.9rem; }
-            .simulator-container-main h3.canvas-title { font-size: 0.8rem; }
+            .simulator-container-main .main-title { font-size: 1rem; padding: 0.5rem; }
+            .control-group label, .data-group p { font-size: 0.7rem; }
+            .simulator-container-main h3.canvas-title { font-size: 0.75rem; }
         }
-        @media (min-width: 1024px) { /* lg, para el layout de 2 columnas principal */
-             .simulator-container-main h1.main-title { font-size: 1.2rem; }
-        }
+      
 
         .simulator-container-main input[type="range"]::-webkit-slider-runnable-track {
-            height: 4px; /* Aún más delgado */
-            background: #d1d5db; 
+            height: 3px; 
+            background: #ced4da; 
             border-radius: 9999px; 
         }
         .simulator-container-main input[type="range"]::-moz-range-track {
-            height: 4px;
-            background: #d1d5db;
+            height: 3px;
+            background: #ced4da;
             border-radius: 9999px;
         }
         .simulator-container-main input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 12px; /* Muy pequeño */
-            height: 12px;
-            background: #1d4ed8; 
+            width: 10px; 
+            height: 10px;
+            background: #0d6efd; /* Azul Bootstrap */
             border-radius: 50%;
             cursor: pointer;
-            margin-top: -4px; /* Ajuste para track delgado */
+            margin-top: -3.5px; 
             border: 1px solid white;
-            box-shadow: 0 0.5px 1px rgba(0,0,0,0.1); 
+            box-shadow: 0 0.5px 1px rgba(0,0,0,0.15); 
         }
         .simulator-container-main input[type="range"]::-moz-range-thumb {
-            width: 12px;
-            height: 12px;
-            background: #1d4ed8;
+            width: 10px;
+            height: 10px;
+            background: #0d6efd;
             border-radius: 50%;
             cursor: pointer;
             border: 1px solid white;
-            box-shadow: 0 0.5px 1px rgba(0,0,0,0.1);
+            box-shadow: 0 0.5px 1px rgba(0,0,0,0.15);
         }
         .simulator-container-main canvas {
-            border: 1px solid #d1d5db; 
+            border: 1px solid #dee2e6; 
             touch-action: none; 
             background-color: #ffffff; 
             width: 100%; 
@@ -107,46 +139,29 @@
         }
         .simulator-container-main .value-badge {
             display: inline-block;
-            padding: 0.5px 3px; /* Mínimo padding */
-            border-radius: 0.25rem;
-            font-weight: 500; 
-            font-size: 0.6rem; /* Extremadamente pequeño */
-            line-height: 1; /* Ajuste de altura de línea */
+            padding: 0.5px 2.5px; 
+            border-radius: 0.125rem; /* Bordes menos redondeados */
+            font-weight: 600; /* Un poco más de peso para destacar */
+            font-size: 0.55rem; /* Diminuto */
+            line-height: 1; 
+            vertical-align: middle;
         }
         .simulator-container-main .info-text { 
             font-size: 0.6rem; 
-            color: #4b5563; 
-            padding: 0.4rem;
+            color: #495057; 
+            padding: 0.3rem;
             text-align: center;
-            border-top: 1px solid #e5e7eb;
+            border-top: 1px solid #d1d5db;
         }
-        .simulator-container-main label {
-            font-size: 0.7rem; /* Muy pequeño */
-            margin-bottom: 0; 
-            color: #374151;
-            display: block; /* Asegurar que ocupa su línea */
+        .visualizations-panel {
+            padding: 0.4rem; /* Padding alrededor de los canvas */
+            background-color: #e9ecef; /* Fondo para el área de visualizaciones */
         }
-        .simulator-container-main .data-pair p { /* Para los pares de etiqueta-valor en "Valores Calculados" */
-             font-size: 0.7rem;
-             color: #374151;
-             margin-bottom: 0.1rem; /* Espacio mínimo */
-        }
-        .simulator-container-main .controls-data-block {
-            background-color: #f3f4f6; 
-            padding: 0.5rem; 
-            border-radius: 0.375rem;
-            box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
-        }
-        .simulator-container-main .visualizations-column {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem; /* Espacio entre canvas */
-        }
-        .simulator-container-main .canvas-wrapper { /* Nuevo wrapper para canvas y su título */
-             padding: 0.4rem;
-             background-color: #e0f2fe; /* un azul muy, muy claro */
-             border-radius: 0.375rem;
-             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        .canvas-wrapper { 
+             padding: 0.3rem;
+             background-color: #f8f9fa; 
+             border-radius: 0.25rem;
+             box-shadow: 0 1px 1px rgba(0,0,0,0.05);
         }
     </style>
 </head>
@@ -157,51 +172,44 @@
             <h1 class="main-title">Simulador de Campo Eléctrico</h1>
         </header>
 
-        <div class="p-2 sm:p-3 lg:grid lg:grid-cols-2 lg:gap-3">
-            
-            <div class="controls-data-block mb-2 lg:mb-0">
-                <h2 class="section-title">Controles y Datos</h2>
-                <div class="mb-2">
-                    <label for="chargeQSim" class="block">
-                        Carga Q (<span class="value-badge bg-blue-100 text-blue-700" id="chargeQLabelSim">&micro;C</span>):
-                        <span id="chargeQValueSim" class="font-semibold text-blue-600"></span>
-                    </label>
-                    <input type="range" id="chargeQSim" min="-20" max="20" value="6" step="0.1" class="w-full cursor-pointer mt-0.5">
-                </div>
-                <div class="mb-3"> {/* Más espacio antes de los valores calculados */}
-                    <label for="radiusRSim" class="block">
-                        Radio R (<span class="value-badge bg-green-100 text-green-700">m</span>):
-                        <span id="radiusRValueSim" class="font-semibold text-green-600"></span>
-                    </label>
-                    <input type="range" id="radiusRSim" min="0.05" max="0.4" value="0.2" step="0.01" class="w-full cursor-pointer mt-0.5">
-                </div>
-
-                <div class="data-pair border-t border-slate-300 pt-2 mt-2">
-                    <p>
-                        Distancia r:
-                        <span id="distanceRDisplaySim" class="font-semibold text-indigo-600 value-badge bg-indigo-100">0.000 m</span>
-                    </p>
-                    <p>
-                        Campo E:
-                        <span id="electricFieldEDisplaySim" class="font-semibold text-indigo-600 value-badge bg-indigo-100">0.00 N/C</span>
-                    </p>
-                </div>
+        <div class="controls-data-panel">
+            <div class="control-group">
+                <label for="chargeQSim">
+                    Q (<span class="value-badge bg-blue-200 text-blue-800" id="chargeQLabelSim">&micro;C</span>):
+                    <span id="chargeQValueSim" class="font-semibold text-blue-700"></span>
+                </label>
+                <input type="range" id="chargeQSim" min="-20" max="20" value="6" step="0.1" class="w-full cursor-pointer">
             </div>
+            <div class="control-group">
+                <label for="radiusRSim">
+                    R (<span class="value-badge bg-green-200 text-green-800">m</span>):
+                    <span id="radiusRValueSim" class="font-semibold text-green-700"></span>
+                </label>
+                <input type="range" id="radiusRSim" min="0.05" max="0.4" value="0.2" step="0.01" class="w-full cursor-pointer">
+            </div>
+            <div class="data-group">
+                <p>
+                    r: <span id="distanceRDisplaySim" class="font-semibold text-indigo-700 value-badge bg-indigo-200">0.000m</span>
+                </p>
+                <p>
+                    E: <span id="electricFieldEDisplaySim" class="font-semibold text-purple-700 value-badge bg-purple-200">0N/C</span>
+                </p>
+            </div>
+        </div>
 
-            <div class="visualizations-column">
-                <div class="canvas-wrapper">
-                    <h3 class="canvas-title">Visualización Interactiva</h3>
-                    <canvas id="simulationCanvasSim"></canvas> 
-                </div>
-                <div class="canvas-wrapper">
-                    <h3 class="canvas-title">Gráfica E vs. r</h3>
-                    <canvas id="graphCanvasSim"></canvas> 
-                </div>
+        <div class="visualizations-panel grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-3">
+            <div class="canvas-wrapper">
+                <h3 class="canvas-title">Visualización Esfera</h3>
+                <canvas id="simulationCanvasSim"></canvas> 
+            </div>
+            <div class="canvas-wrapper">
+                <h3 class="canvas-title">Gráfica E vs. r</h3>
+                <canvas id="graphCanvasSim"></canvas> 
             </div>
         </div>
 
         <footer class="info-text">
-            <p>Mueve el cursor/dedo en "Visualización" para cambiar 'r'. k &approx; 8.99e9 Nm<sup>2</sup>/C<sup>2</sup>.</p>
+            <p>Mueve cursor/dedo en "Visualización Esfera". k &approx; 8.99e9 Nm<sup>2</sup>/C<sup>2</sup>.</p>
         </footer>
     </div>
 
@@ -233,20 +241,20 @@
 
         const MAX_VISUAL_RANGE_M = 0.5; 
         const GRAPH_MAX_R_M = 0.6;      
-        const GRAPH_PADDING = 22; // Extremadamente reducido
-        const GRAPH_AXIS_FONT_SIZE = 6.5; // Extremadamente pequeño
+        const GRAPH_PADDING = 18; // Mínimo padding
+        const GRAPH_AXIS_FONT_SIZE = 6; // Mínimo
 
-        function formatScientific(num, precision = 0) { // Menos precisión para compacidad
+        function formatScientific(num, precision = 0) { 
             if (num === 0) return "0";
             const absNum = Math.abs(num);
             if ((absNum < 1e-1 && absNum !== 0) || absNum >= 1e3) { 
                 return num.toExponential(precision);
             }
-            if (absNum < 10) return num.toFixed(precision + 1);
+            if (absNum < 10 && absNum !== 0) return num.toFixed(precision + 1);
             return num.toFixed(precision);
         }
 
-        function drawArrow(ctx, fromX, fromY, toX, toY, color = 'black', lineWidth = 1, arrowHeadSize = 4) { // Aún más pequeño
+        function drawArrow(ctx, fromX, fromY, toX, toY, color = 'black', lineWidth = 0.8, arrowHeadSize = 3.5) { 
             const dx = toX - fromX;
             const dy = toY - fromY;
             if (Math.abs(dx) < 0.1 && Math.abs(dy) < 0.1) return; 
@@ -295,7 +303,7 @@
             simCtx.fillStyle = chargeQ_C > 0 ? 'rgba(255, 100, 100, 0.15)' : (chargeQ_C < 0 ? 'rgba(100, 100, 255, 0.15)' : 'rgba(128,128,128,0.15)');
             simCtx.fill();
             simCtx.strokeStyle = chargeQ_C > 0 ? 'rgb(200, 50, 50)' : (chargeQ_C < 0 ? 'rgb(50, 50, 200)' : 'rgb(100,100,100)');
-            simCtx.lineWidth = 0.8; 
+            simCtx.lineWidth = 0.7; 
             simCtx.stroke();
             
             simCtx.strokeStyle = '#f3f4f6'; 
@@ -316,14 +324,14 @@
                 const E = calculateElectricField(chargeQ_C, radiusR_m, testPointR_m);
 
                 simCtx.beginPath();
-                simCtx.arc(mousePosSim.x, mousePosSim.y, 2.5, 0, 2 * Math.PI); 
+                simCtx.arc(mousePosSim.x, mousePosSim.y, 2, 0, 2 * Math.PI); 
                 simCtx.fillStyle = 'rgb(55,65,81)'; 
                 simCtx.fill();
 
                 if (Math.abs(E) > 1e-3 && dist_pixels_from_center > 1e-3) { 
-                    let arrowLengthScaleFactor = 0.010 * simScale; 
+                    let arrowLengthScaleFactor = 0.009 * simScale; 
                     let arrowLengthPixels = Math.abs(E) * arrowLengthScaleFactor;
-                    arrowLengthPixels = Math.max(5, Math.min(arrowLengthPixels, simCanvasEl.width / 7)); 
+                    arrowLengthPixels = Math.max(4, Math.min(arrowLengthPixels, simCanvasEl.width / 8)); 
 
                     const unitVecX = dist_pixels_from_center === 0 ? 0 : dx_mouse_center / dist_pixels_from_center;
                     const unitVecY = dist_pixels_from_center === 0 ? 0 : dy_mouse_center / dist_pixels_from_center;
@@ -343,7 +351,7 @@
             if (!graphCtx || graphCanvasEl.width === 0 || graphCanvasEl.height === 0) return;
             graphCtx.clearRect(0, 0, graphCanvasEl.width, graphCanvasEl.height);
 
-            const N_POINTS_GRAPH = 80; 
+            const N_POINTS_GRAPH = 70; 
             const r_step = GRAPH_MAX_R_M / N_POINTS_GRAPH;
 
             let max_E_abs_val = Math.abs(calculateElectricField(chargeQ_C, radiusR_m, radiusR_m));
@@ -355,8 +363,8 @@
             const graphHeight = graphCanvasEl.height - 2 * GRAPH_PADDING;
             if (graphWidth <= 0 || graphHeight <= 0) return;
 
-            graphCtx.strokeStyle = '#bcbec0'; 
-            graphCtx.lineWidth = 0.5; 
+            graphCtx.strokeStyle = '#cfd8dc'; 
+            graphCtx.lineWidth = 0.4; 
             graphCtx.font = `${GRAPH_AXIS_FONT_SIZE}px Inter`;
 
             graphCtx.beginPath();
@@ -365,36 +373,38 @@
             graphCtx.lineTo(graphCanvasEl.width - GRAPH_PADDING, graphCanvasEl.height - GRAPH_PADDING); 
             graphCtx.stroke();
 
-            graphCtx.fillStyle = '#374151'; 
+            graphCtx.fillStyle = '#455a64'; 
             graphCtx.textAlign = 'center';
-            graphCtx.fillText('r', GRAPH_PADDING + graphWidth / 2, graphCanvasEl.height - GRAPH_PADDING / 4); 
+            graphCtx.fillText('r', GRAPH_PADDING + graphWidth / 2, graphCanvasEl.height - GRAPH_PADDING / 5); 
             graphCtx.save();
-            graphCtx.translate(GRAPH_PADDING / 5, GRAPH_PADDING + graphHeight / 2); 
+            graphCtx.translate(GRAPH_PADDING / 6, GRAPH_PADDING + graphHeight / 2); 
             graphCtx.rotate(-Math.PI / 2);
             graphCtx.fillText('E', 0, 0);
             graphCtx.restore();
 
-            const numTicksR = Math.max(1, Math.min(2, Math.floor(graphWidth / 30))); 
+            const numTicksR = 1; // Mínimo de ticks
             for (let i = 0; i <= numTicksR; i++) {
                 const r_val = (GRAPH_MAX_R_M / numTicksR) * i;
                 const x = GRAPH_PADDING + (r_val / GRAPH_MAX_R_M) * graphWidth;
-                graphCtx.beginPath();
-                graphCtx.moveTo(x, graphCanvasEl.height - GRAPH_PADDING - 1); 
-                graphCtx.lineTo(x, graphCanvasEl.height - GRAPH_PADDING + 1);
-                graphCtx.stroke();
-                if (i > 0 || numTicksR === 0) { // Evitar dibujar "0.0" encima del eje E si es posible
-                     graphCtx.fillText(r_val.toFixed(1), x, graphCanvasEl.height - GRAPH_PADDING + GRAPH_AXIS_FONT_SIZE + 1); 
+                if (i > 0) { // Solo dibujar el tick del extremo, no el del origen
+                    graphCtx.beginPath();
+                    graphCtx.moveTo(x, graphCanvasEl.height - GRAPH_PADDING - 1); 
+                    graphCtx.lineTo(x, graphCanvasEl.height - GRAPH_PADDING + 1);
+                    graphCtx.stroke();
+                    graphCtx.fillText(r_val.toFixed(1), x, graphCanvasEl.height - GRAPH_PADDING + GRAPH_AXIS_FONT_SIZE + 1); 
                 }
             }
             
-            const numTicksE = Math.max(1, Math.min(2, Math.floor(graphHeight / 20))); 
+            const numTicksE = 1; // Mínimo de ticks
             graphCtx.textAlign = 'right';
             for (let i = 0; i <= numTicksE; i++) {
                 let e_val_plot;
-                if (chargeQ_C === 0 && i === 0) e_val_plot = 0; // Asegurar que 0 se muestra si Q=0
+                if (i === 0 && chargeQ_C === 0) e_val_plot = 0; // Mostrar 0 si Q es 0
                 else if (chargeQ_C > 0) e_val_plot = (max_E_abs_val / numTicksE) * i;
                 else e_val_plot = -(max_E_abs_val / numTicksE) * i;
                 
+                if (i === 0 && e_val_plot !== 0 && chargeQ_C !==0) continue; // No dibujar el tick 0 si no es el único o si Q no es 0
+
                 let y;
                 if (chargeQ_C === 0) y = graphCanvasEl.height - GRAPH_PADDING;
                 else if (chargeQ_C > 0) y = (graphCanvasEl.height - GRAPH_PADDING) - (e_val_plot / max_E_abs_val) * graphHeight;
@@ -404,15 +414,13 @@
                 graphCtx.moveTo(GRAPH_PADDING - 1, y); 
                 graphCtx.lineTo(GRAPH_PADDING + 1, y);
                 graphCtx.stroke();
-                 if (i > 0 || numTicksE === 0 || (chargeQ_C === 0 && i === 0) ) { // Evitar dibujar "0" encima del eje r si es posible
-                    graphCtx.fillText(formatScientific(e_val_plot,0), GRAPH_PADDING - 2, y + (GRAPH_AXIS_FONT_SIZE/3)); 
-                 }
+                graphCtx.fillText(formatScientific(e_val_plot,0), GRAPH_PADDING - 2, y + (GRAPH_AXIS_FONT_SIZE/3)); 
             }
             graphCtx.textAlign = 'center'; 
 
             graphCtx.beginPath();
-            graphCtx.strokeStyle = '#047857'; 
-            graphCtx.lineWidth = 0.8; 
+            graphCtx.strokeStyle = '#00796b'; 
+            graphCtx.lineWidth = 0.7; 
 
             for (let i = 0; i <= N_POINTS_GRAPH; i++) {
                 const r_plot = i * r_step;
@@ -431,13 +439,13 @@
                 const r_sphere_x = GRAPH_PADDING + (radiusR_m / GRAPH_MAX_R_M) * graphWidth;
                 graphCtx.beginPath();
                 graphCtx.setLineDash([1, 1]); 
-                graphCtx.strokeStyle = '#6d28d9'; 
+                graphCtx.strokeStyle = '#7b1fa2'; 
                 graphCtx.moveTo(r_sphere_x, GRAPH_PADDING);
                 graphCtx.lineTo(r_sphere_x, graphCanvasEl.height - GRAPH_PADDING);
                 graphCtx.stroke();
                 graphCtx.setLineDash([]);
-                graphCtx.fillStyle = '#6d28d9';
-                graphCtx.fillText('R', r_sphere_x, GRAPH_PADDING - 2); 
+                graphCtx.fillStyle = '#7b1fa2';
+                graphCtx.fillText('R', r_sphere_x, GRAPH_PADDING - 1.5); 
             }
 
             if (mousePosSim.active && testPointR_m <= GRAPH_MAX_R_M) {
@@ -448,8 +456,8 @@
                 else if (chargeQ_C > 0) current_e_y = (graphCanvasEl.height - GRAPH_PADDING) - (E_current / max_E_abs_val) * graphHeight;
                 else current_e_y = GRAPH_PADDING - (E_current / max_E_abs_val) * graphHeight;
                 graphCtx.beginPath();
-                graphCtx.arc(current_r_x, current_e_y, 2.5, 0, 2 * Math.PI); 
-                graphCtx.fillStyle = '#be185d'; 
+                graphCtx.arc(current_r_x, current_e_y, 2, 0, 2 * Math.PI); 
+                graphCtx.fillStyle = '#c2185b'; 
                 graphCtx.fill();
             }
         }
@@ -459,8 +467,8 @@
             if(radiusRValueDisplay) radiusRValueDisplay.textContent = `${parseFloat(radiusRSlider.value).toFixed(2)}`;
             
             const E_current = calculateElectricField(chargeQ_C, radiusR_m, testPointR_m);
-            if(distanceRDisplay) distanceRDisplay.textContent = `${testPointR_m.toFixed(3)} m`;
-            if(electricFieldEDisplay) electricFieldEDisplay.textContent = `${formatScientific(E_current)} N/C`;
+            if(distanceRDisplay) distanceRDisplay.textContent = `${testPointR_m.toFixed(3)}m`; // Sin espacio
+            if(electricFieldEDisplay) electricFieldEDisplay.textContent = `${formatScientific(E_current)}N/C`; // Sin espacio
         }
 
         function mainLoop() {
@@ -488,17 +496,17 @@
         function stopCanvasInteraction() { /* No action */ }
 
         function resizeCanvases() {
-            const simContainer = simCanvasEl.parentElement; // Should be .canvas-wrapper
-            const graphContainer = graphCanvasEl.parentElement; // Should be .canvas-wrapper
+            const simCanvasWrapper = simCanvasEl.parentElement; 
+            const graphCanvasWrapper = graphCanvasEl.parentElement; 
 
-            if (simContainer) {
-                 const simPaddingX = parseInt(getComputedStyle(simContainer).paddingLeft) + parseInt(getComputedStyle(simContainer).paddingRight);
-                 simCanvasEl.width = Math.max(50, simContainer.clientWidth - simPaddingX);
+            if (simCanvasWrapper) {
+                 const simPaddingX = parseInt(getComputedStyle(simCanvasWrapper).paddingLeft) + parseInt(getComputedStyle(simCanvasWrapper).paddingRight);
+                 simCanvasEl.width = Math.max(50, simCanvasWrapper.clientWidth - simPaddingX);
                  simCanvasEl.height = simCanvasEl.width; 
             }
-            if (graphContainer) {
-                const graphPaddingX = parseInt(getComputedStyle(graphContainer).paddingLeft) + parseInt(getComputedStyle(graphContainer).paddingRight);
-                graphCanvasEl.width = Math.max(50, graphContainer.clientWidth - graphPaddingX);
+            if (graphCanvasWrapper) {
+                const graphPaddingX = parseInt(getComputedStyle(graphCanvasWrapper).paddingLeft) + parseInt(getComputedStyle(graphCanvasWrapper).paddingRight);
+                graphCanvasEl.width = Math.max(50, graphCanvasWrapper.clientWidth - graphPaddingX);
                 graphCanvasEl.height = graphCanvasEl.width; 
             }
             
