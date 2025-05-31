@@ -13,17 +13,17 @@
         body { 
             font-family: 'Inter', sans-serif;
             overscroll-behavior: none; 
-            background-color: #e5e7eb; /* Fondo gris más claro para la página */
+            background-color: #e5e7eb; 
             margin: 0; 
-            padding: 0.5em; /* Padding mínimo para la página */
+            padding: 0.5em; 
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* Alinear al inicio para que el scroll no sea necesario si el contenido es alto */
+            align-items: flex-start; 
             min-height: 100vh;
         }
         .simulator-container-main {
             width: 100%;
-            max-width: 960px; /* Ancho máximo para PC, puede ajustarse */
+            max-width: 900px; /* Ligeramente más estrecho */
             margin: 0.5em auto; 
             border: 1px solid #d1d5db; 
             border-radius: 0.5rem; 
@@ -32,71 +32,70 @@
             overflow: hidden; 
         }
 
-        /* Estilos para encabezados dentro del simulador */
-        .simulator-container-main h1 {
-            color: #1e3a8a; /* Azul oscuro */
-            font-size: 1.1rem; /* Reducido */
+        .simulator-container-main h1.main-title { /* Título principal del simulador */
+            color: #1e3a8a;
+            font-size: 1rem; /* Muy reducido */
             font-weight: 600; 
             text-align: center;
-            padding: 0.6rem 0.5rem; /* Padding reducido */
+            padding: 0.5rem; 
             border-bottom: 1px solid #e5e7eb;
-            background-color: #f3f4f6; /* Fondo ligero para la cabecera */
+            background-color: #f3f4f6; 
         }
-        .simulator-container-main h2 { /* Para títulos de sección como Parámetros, Valores, etc. */
-            color: #1e40af; /* Azul un poco más claro */
-            font-size: 0.9rem; /* Reducido */
+        .simulator-container-main h2.section-title { /* Título para el bloque de Controles y Datos */
+            color: #1e40af;
+            font-size: 0.85rem; /* Reducido */
             font-weight: 600;
-            margin-bottom: 0.4rem; /* Espacio reducido */
+            margin-bottom: 0.5rem; 
+            padding-bottom: 0.3rem;
+            border-bottom: 1px solid #e0e7ff;
         }
-         .simulator-container-main h3 { /* Para títulos de los canvas */
+         .simulator-container-main h3.canvas-title { /* Para títulos de los canvas */
             color: #1d4ed8;
-            font-size: 0.8rem;
+            font-size: 0.75rem; /* Muy reducido */
             font-weight: 500;
             text-align: center;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.2rem; /* Espacio mínimo */
         }
-
 
         @media (min-width: 640px) { /* sm */
-            .simulator-container-main h1 { font-size: 1.25rem; padding: 0.75rem 0.5rem; }
-            .simulator-container-main h2 { font-size: 1rem; margin-bottom: 0.5rem; }
-            .simulator-container-main h3 { font-size: 0.85rem; }
+            .simulator-container-main h1.main-title { font-size: 1.1rem; padding: 0.6rem; }
+            .simulator-container-main h2.section-title { font-size: 0.9rem; }
+            .simulator-container-main h3.canvas-title { font-size: 0.8rem; }
         }
         @media (min-width: 1024px) { /* lg, para el layout de 2 columnas principal */
-             .simulator-container-main h1 { font-size: 1.4rem; }
+             .simulator-container-main h1.main-title { font-size: 1.2rem; }
         }
 
-
         .simulator-container-main input[type="range"]::-webkit-slider-runnable-track {
-            height: 5px; 
+            height: 4px; /* Aún más delgado */
             background: #d1d5db; 
             border-radius: 9999px; 
         }
         .simulator-container-main input[type="range"]::-moz-range-track {
-            height: 5px;
+            height: 4px;
             background: #d1d5db;
             border-radius: 9999px;
         }
         .simulator-container-main input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 14px; 
-            height: 14px;
-            background: #1d4ed8; /* Azul principal */
+            width: 12px; /* Muy pequeño */
+            height: 12px;
+            background: #1d4ed8; 
             border-radius: 50%;
             cursor: pointer;
-            margin-top: -4.5px; 
-            border: 1.5px solid white;
-            box-shadow: 0 1px 1.5px rgba(0,0,0,0.1); 
+            margin-top: -4px; /* Ajuste para track delgado */
+            border: 1px solid white;
+            box-shadow: 0 0.5px 1px rgba(0,0,0,0.1); 
         }
         .simulator-container-main input[type="range"]::-moz-range-thumb {
-            width: 14px;
-            height: 14px;
+            width: 12px;
+            height: 12px;
             background: #1d4ed8;
             border-radius: 50%;
             cursor: pointer;
-            border: 1.5px solid white;
-            box-shadow: 0 1px 1.5px rgba(0,0,0,0.1);
+            border: 1px solid white;
+            box-shadow: 0 0.5px 1px rgba(0,0,0,0.1);
         }
         .simulator-container-main canvas {
             border: 1px solid #d1d5db; 
@@ -108,33 +107,46 @@
         }
         .simulator-container-main .value-badge {
             display: inline-block;
-            padding: 0.5px 4px; 
+            padding: 0.5px 3px; /* Mínimo padding */
             border-radius: 0.25rem;
             font-weight: 500; 
-            font-size: 0.65rem; /* Muy pequeño */
+            font-size: 0.6rem; /* Extremadamente pequeño */
+            line-height: 1; /* Ajuste de altura de línea */
         }
-        .simulator-container-main .info-text { /* Para el footer */
-            font-size: 0.65rem; 
+        .simulator-container-main .info-text { 
+            font-size: 0.6rem; 
             color: #4b5563; 
-            padding: 0.5rem;
+            padding: 0.4rem;
             text-align: center;
             border-top: 1px solid #e5e7eb;
         }
         .simulator-container-main label {
-            font-size: 0.75rem; /* Pequeño */
-            margin-bottom: 0.1rem; 
+            font-size: 0.7rem; /* Muy pequeño */
+            margin-bottom: 0; 
             color: #374151;
+            display: block; /* Asegurar que ocupa su línea */
         }
-        .simulator-container-main .parameter-block, .simulator-container-main .results-block {
-            background-color: #f9fafb; /* Ligeramente diferente al fondo del canvas */
-            padding: 0.6rem; /* Padding reducido */
+        .simulator-container-main .data-pair p { /* Para los pares de etiqueta-valor en "Valores Calculados" */
+             font-size: 0.7rem;
+             color: #374151;
+             margin-bottom: 0.1rem; /* Espacio mínimo */
+        }
+        .simulator-container-main .controls-data-block {
+            background-color: #f3f4f6; 
+            padding: 0.5rem; 
             border-radius: 0.375rem;
             box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
         }
-        .simulator-container-main .canvas-block {
-             padding: 0.5rem;
-             background-color: #f0f9ff; /* un azul muy claro para el fondo del canvas */
+        .simulator-container-main .visualizations-column {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem; /* Espacio entre canvas */
+        }
+        .simulator-container-main .canvas-wrapper { /* Nuevo wrapper para canvas y su título */
+             padding: 0.4rem;
+             background-color: #e0f2fe; /* un azul muy, muy claro */
              border-radius: 0.375rem;
+             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
     </style>
 </head>
@@ -142,58 +154,54 @@
 
     <div class="simulator-container-main">
         <header>
-            <h1>Simulador de Campo Eléctrico</h1>
+            <h1 class="main-title">Simulador de Campo Eléctrico</h1>
         </header>
 
         <div class="p-2 sm:p-3 lg:grid lg:grid-cols-2 lg:gap-3">
             
-            <div class="flex flex-col gap-2 sm:gap-3">
-                <div class="parameter-block">
-                    <h2>Parámetros</h2>
-                    <div class="mb-1.5">
-                        <label for="chargeQSim" class="block">
-                            Carga Q (<span class="value-badge bg-blue-100 text-blue-700" id="chargeQLabelSim">&micro;C</span>):
-                            <span id="chargeQValueSim" class="font-semibold text-blue-600 text-xs"></span>
-                        </label>
-                        <input type="range" id="chargeQSim" min="-20" max="20" value="6" step="0.1" class="w-full cursor-pointer mt-0.5">
-                    </div>
-                    <div>
-                        <label for="radiusRSim" class="block">
-                            Radio R (<span class="value-badge bg-green-100 text-green-700">m</span>):
-                            <span id="radiusRValueSim" class="font-semibold text-green-600 text-xs"></span>
-                        </label>
-                        <input type="range" id="radiusRSim" min="0.05" max="0.4" value="0.2" step="0.01" class="w-full cursor-pointer mt-0.5">
-                    </div>
+            <div class="controls-data-block mb-2 lg:mb-0">
+                <h2 class="section-title">Controles y Datos</h2>
+                <div class="mb-2">
+                    <label for="chargeQSim" class="block">
+                        Carga Q (<span class="value-badge bg-blue-100 text-blue-700" id="chargeQLabelSim">&micro;C</span>):
+                        <span id="chargeQValueSim" class="font-semibold text-blue-600"></span>
+                    </label>
+                    <input type="range" id="chargeQSim" min="-20" max="20" value="6" step="0.1" class="w-full cursor-pointer mt-0.5">
+                </div>
+                <div class="mb-3"> {/* Más espacio antes de los valores calculados */}
+                    <label for="radiusRSim" class="block">
+                        Radio R (<span class="value-badge bg-green-100 text-green-700">m</span>):
+                        <span id="radiusRValueSim" class="font-semibold text-green-600"></span>
+                    </label>
+                    <input type="range" id="radiusRSim" min="0.05" max="0.4" value="0.2" step="0.01" class="w-full cursor-pointer mt-0.5">
                 </div>
 
-                <div class="canvas-block flex-grow">
-                    <h3>Visualización Interactiva</h3>
-                    <canvas id="simulationCanvasSim"></canvas> 
-                </div>
-            </div>
-
-            <div class="flex flex-col gap-2 sm:gap-3 mt-2 lg:mt-0">
-                <div class="results-block">
-                    <h2>Valores Calculados</h2>
-                    <p class="text-xs text-slate-700 mb-0.5">
+                <div class="data-pair border-t border-slate-300 pt-2 mt-2">
+                    <p>
                         Distancia r:
                         <span id="distanceRDisplaySim" class="font-semibold text-indigo-600 value-badge bg-indigo-100">0.000 m</span>
                     </p>
-                    <p class="text-xs text-slate-700">
+                    <p>
                         Campo E:
                         <span id="electricFieldEDisplaySim" class="font-semibold text-indigo-600 value-badge bg-indigo-100">0.00 N/C</span>
                     </p>
                 </div>
+            </div>
 
-                <div class="canvas-block flex-grow">
-                    <h3>Gráfica E vs. r</h3>
+            <div class="visualizations-column">
+                <div class="canvas-wrapper">
+                    <h3 class="canvas-title">Visualización Interactiva</h3>
+                    <canvas id="simulationCanvasSim"></canvas> 
+                </div>
+                <div class="canvas-wrapper">
+                    <h3 class="canvas-title">Gráfica E vs. r</h3>
                     <canvas id="graphCanvasSim"></canvas> 
                 </div>
             </div>
         </div>
 
         <footer class="info-text">
-            <p>Mueve el cursor/dedo en la "Visualización" para cambiar 'r'. k &approx; 8.99 &times; 10<sup>9</sup> N&middot;m<sup>2</sup>/C<sup>2</sup>.</p>
+            <p>Mueve el cursor/dedo en "Visualización" para cambiar 'r'. k &approx; 8.99e9 Nm<sup>2</sup>/C<sup>2</sup>.</p>
         </footer>
     </div>
 
@@ -225,18 +233,20 @@
 
         const MAX_VISUAL_RANGE_M = 0.5; 
         const GRAPH_MAX_R_M = 0.6;      
-        const GRAPH_PADDING = 25; // Aún más reducido
-        const GRAPH_AXIS_FONT_SIZE = 7; // Muy pequeño
+        const GRAPH_PADDING = 22; // Extremadamente reducido
+        const GRAPH_AXIS_FONT_SIZE = 6.5; // Extremadamente pequeño
 
-        function formatScientific(num, precision = 1) { 
-            if (num === 0) return "0.0";
-            if ((Math.abs(num) < 1e-1 && num !== 0) || Math.abs(num) >= 1e3) { 
+        function formatScientific(num, precision = 0) { // Menos precisión para compacidad
+            if (num === 0) return "0";
+            const absNum = Math.abs(num);
+            if ((absNum < 1e-1 && absNum !== 0) || absNum >= 1e3) { 
                 return num.toExponential(precision);
             }
-            return num.toFixed(precision + (Math.abs(num) < 1 ? 1:0) ); // Más precisión para números pequeños no exponenciales
+            if (absNum < 10) return num.toFixed(precision + 1);
+            return num.toFixed(precision);
         }
 
-        function drawArrow(ctx, fromX, fromY, toX, toY, color = 'black', lineWidth = 1.2, arrowHeadSize = 5) { 
+        function drawArrow(ctx, fromX, fromY, toX, toY, color = 'black', lineWidth = 1, arrowHeadSize = 4) { // Aún más pequeño
             const dx = toX - fromX;
             const dy = toY - fromY;
             if (Math.abs(dx) < 0.1 && Math.abs(dy) < 0.1) return; 
@@ -282,14 +292,14 @@
 
             simCtx.beginPath();
             simCtx.arc(simCenterX, simCenterY, radiusR_m * simScale, 0, 2 * Math.PI);
-            simCtx.fillStyle = chargeQ_C > 0 ? 'rgba(255, 100, 100, 0.2)' : (chargeQ_C < 0 ? 'rgba(100, 100, 255, 0.2)' : 'rgba(128,128,128,0.2)');
+            simCtx.fillStyle = chargeQ_C > 0 ? 'rgba(255, 100, 100, 0.15)' : (chargeQ_C < 0 ? 'rgba(100, 100, 255, 0.15)' : 'rgba(128,128,128,0.15)');
             simCtx.fill();
             simCtx.strokeStyle = chargeQ_C > 0 ? 'rgb(200, 50, 50)' : (chargeQ_C < 0 ? 'rgb(50, 50, 200)' : 'rgb(100,100,100)');
-            simCtx.lineWidth = 1; 
+            simCtx.lineWidth = 0.8; 
             simCtx.stroke();
             
-            simCtx.strokeStyle = '#e5e7eb'; 
-            simCtx.lineWidth = 0.3;
+            simCtx.strokeStyle = '#f3f4f6'; 
+            simCtx.lineWidth = 0.2;
             simCtx.beginPath();
             simCtx.moveTo(0, simCenterY); simCtx.lineTo(simCanvasEl.width, simCenterY); 
             simCtx.moveTo(simCenterX, 0); simCtx.lineTo(simCenterX, simCanvasEl.height); 
@@ -306,14 +316,14 @@
                 const E = calculateElectricField(chargeQ_C, radiusR_m, testPointR_m);
 
                 simCtx.beginPath();
-                simCtx.arc(mousePosSim.x, mousePosSim.y, 3, 0, 2 * Math.PI); 
+                simCtx.arc(mousePosSim.x, mousePosSim.y, 2.5, 0, 2 * Math.PI); 
                 simCtx.fillStyle = 'rgb(55,65,81)'; 
                 simCtx.fill();
 
                 if (Math.abs(E) > 1e-3 && dist_pixels_from_center > 1e-3) { 
-                    let arrowLengthScaleFactor = 0.012 * simScale; 
+                    let arrowLengthScaleFactor = 0.010 * simScale; 
                     let arrowLengthPixels = Math.abs(E) * arrowLengthScaleFactor;
-                    arrowLengthPixels = Math.max(6, Math.min(arrowLengthPixels, simCanvasEl.width / 6)); 
+                    arrowLengthPixels = Math.max(5, Math.min(arrowLengthPixels, simCanvasEl.width / 7)); 
 
                     const unitVecX = dist_pixels_from_center === 0 ? 0 : dx_mouse_center / dist_pixels_from_center;
                     const unitVecY = dist_pixels_from_center === 0 ? 0 : dy_mouse_center / dist_pixels_from_center;
@@ -333,7 +343,7 @@
             if (!graphCtx || graphCanvasEl.width === 0 || graphCanvasEl.height === 0) return;
             graphCtx.clearRect(0, 0, graphCanvasEl.width, graphCanvasEl.height);
 
-            const N_POINTS_GRAPH = 100; 
+            const N_POINTS_GRAPH = 80; 
             const r_step = GRAPH_MAX_R_M / N_POINTS_GRAPH;
 
             let max_E_abs_val = Math.abs(calculateElectricField(chargeQ_C, radiusR_m, radiusR_m));
@@ -345,8 +355,8 @@
             const graphHeight = graphCanvasEl.height - 2 * GRAPH_PADDING;
             if (graphWidth <= 0 || graphHeight <= 0) return;
 
-            graphCtx.strokeStyle = '#a1a1aa'; 
-            graphCtx.lineWidth = 0.6; 
+            graphCtx.strokeStyle = '#bcbec0'; 
+            graphCtx.lineWidth = 0.5; 
             graphCtx.font = `${GRAPH_AXIS_FONT_SIZE}px Inter`;
 
             graphCtx.beginPath();
@@ -355,31 +365,33 @@
             graphCtx.lineTo(graphCanvasEl.width - GRAPH_PADDING, graphCanvasEl.height - GRAPH_PADDING); 
             graphCtx.stroke();
 
-            graphCtx.fillStyle = '#1f2937'; 
+            graphCtx.fillStyle = '#374151'; 
             graphCtx.textAlign = 'center';
-            graphCtx.fillText('r (m)', GRAPH_PADDING + graphWidth / 2, graphCanvasEl.height - GRAPH_PADDING / 3.5); 
+            graphCtx.fillText('r', GRAPH_PADDING + graphWidth / 2, graphCanvasEl.height - GRAPH_PADDING / 4); 
             graphCtx.save();
-            graphCtx.translate(GRAPH_PADDING / 4, GRAPH_PADDING + graphHeight / 2); 
+            graphCtx.translate(GRAPH_PADDING / 5, GRAPH_PADDING + graphHeight / 2); 
             graphCtx.rotate(-Math.PI / 2);
-            graphCtx.fillText('E (N/C)', 0, 0);
+            graphCtx.fillText('E', 0, 0);
             graphCtx.restore();
 
-            const numTicksR = Math.max(2, Math.min(3, Math.floor(graphWidth / 35))); 
+            const numTicksR = Math.max(1, Math.min(2, Math.floor(graphWidth / 30))); 
             for (let i = 0; i <= numTicksR; i++) {
                 const r_val = (GRAPH_MAX_R_M / numTicksR) * i;
                 const x = GRAPH_PADDING + (r_val / GRAPH_MAX_R_M) * graphWidth;
                 graphCtx.beginPath();
-                graphCtx.moveTo(x, graphCanvasEl.height - GRAPH_PADDING - 1.5); 
-                graphCtx.lineTo(x, graphCanvasEl.height - GRAPH_PADDING + 1.5);
+                graphCtx.moveTo(x, graphCanvasEl.height - GRAPH_PADDING - 1); 
+                graphCtx.lineTo(x, graphCanvasEl.height - GRAPH_PADDING + 1);
                 graphCtx.stroke();
-                graphCtx.fillText(r_val.toFixed(1), x, graphCanvasEl.height - GRAPH_PADDING + GRAPH_AXIS_FONT_SIZE + 1.5); 
+                if (i > 0 || numTicksR === 0) { // Evitar dibujar "0.0" encima del eje E si es posible
+                     graphCtx.fillText(r_val.toFixed(1), x, graphCanvasEl.height - GRAPH_PADDING + GRAPH_AXIS_FONT_SIZE + 1); 
+                }
             }
             
-            const numTicksE = Math.max(2, Math.min(3, Math.floor(graphHeight / 25))); 
+            const numTicksE = Math.max(1, Math.min(2, Math.floor(graphHeight / 20))); 
             graphCtx.textAlign = 'right';
             for (let i = 0; i <= numTicksE; i++) {
                 let e_val_plot;
-                if (chargeQ_C === 0) e_val_plot = 0;
+                if (chargeQ_C === 0 && i === 0) e_val_plot = 0; // Asegurar que 0 se muestra si Q=0
                 else if (chargeQ_C > 0) e_val_plot = (max_E_abs_val / numTicksE) * i;
                 else e_val_plot = -(max_E_abs_val / numTicksE) * i;
                 
@@ -389,16 +401,18 @@
                 else y = GRAPH_PADDING - (e_val_plot / max_E_abs_val) * graphHeight;
                 
                 graphCtx.beginPath();
-                graphCtx.moveTo(GRAPH_PADDING - 1.5, y); 
-                graphCtx.lineTo(GRAPH_PADDING + 1.5, y);
+                graphCtx.moveTo(GRAPH_PADDING - 1, y); 
+                graphCtx.lineTo(GRAPH_PADDING + 1, y);
                 graphCtx.stroke();
-                graphCtx.fillText(formatScientific(e_val_plot,0), GRAPH_PADDING - 2.5, y + (GRAPH_AXIS_FONT_SIZE/3)); 
+                 if (i > 0 || numTicksE === 0 || (chargeQ_C === 0 && i === 0) ) { // Evitar dibujar "0" encima del eje r si es posible
+                    graphCtx.fillText(formatScientific(e_val_plot,0), GRAPH_PADDING - 2, y + (GRAPH_AXIS_FONT_SIZE/3)); 
+                 }
             }
             graphCtx.textAlign = 'center'; 
 
             graphCtx.beginPath();
             graphCtx.strokeStyle = '#047857'; 
-            graphCtx.lineWidth = 1; 
+            graphCtx.lineWidth = 0.8; 
 
             for (let i = 0; i <= N_POINTS_GRAPH; i++) {
                 const r_plot = i * r_step;
@@ -416,14 +430,14 @@
             if (radiusR_m <= GRAPH_MAX_R_M) {
                 const r_sphere_x = GRAPH_PADDING + (radiusR_m / GRAPH_MAX_R_M) * graphWidth;
                 graphCtx.beginPath();
-                graphCtx.setLineDash([1.5, 1.5]); 
+                graphCtx.setLineDash([1, 1]); 
                 graphCtx.strokeStyle = '#6d28d9'; 
                 graphCtx.moveTo(r_sphere_x, GRAPH_PADDING);
                 graphCtx.lineTo(r_sphere_x, graphCanvasEl.height - GRAPH_PADDING);
                 graphCtx.stroke();
                 graphCtx.setLineDash([]);
                 graphCtx.fillStyle = '#6d28d9';
-                graphCtx.fillText('R', r_sphere_x, GRAPH_PADDING - 2.5); 
+                graphCtx.fillText('R', r_sphere_x, GRAPH_PADDING - 2); 
             }
 
             if (mousePosSim.active && testPointR_m <= GRAPH_MAX_R_M) {
@@ -434,7 +448,7 @@
                 else if (chargeQ_C > 0) current_e_y = (graphCanvasEl.height - GRAPH_PADDING) - (E_current / max_E_abs_val) * graphHeight;
                 else current_e_y = GRAPH_PADDING - (E_current / max_E_abs_val) * graphHeight;
                 graphCtx.beginPath();
-                graphCtx.arc(current_r_x, current_e_y, 3, 0, 2 * Math.PI); 
+                graphCtx.arc(current_r_x, current_e_y, 2.5, 0, 2 * Math.PI); 
                 graphCtx.fillStyle = '#be185d'; 
                 graphCtx.fill();
             }
@@ -474,8 +488,8 @@
         function stopCanvasInteraction() { /* No action */ }
 
         function resizeCanvases() {
-            const simContainer = simCanvasEl.parentElement;
-            const graphContainer = graphCanvasEl.parentElement;
+            const simContainer = simCanvasEl.parentElement; // Should be .canvas-wrapper
+            const graphContainer = graphCanvasEl.parentElement; // Should be .canvas-wrapper
 
             if (simContainer) {
                  const simPaddingX = parseInt(getComputedStyle(simContainer).paddingLeft) + parseInt(getComputedStyle(simContainer).paddingRight);
