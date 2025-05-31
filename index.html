@@ -1,0 +1,516 @@
+<!-- 
+  Simulador de Campo Eléctrico para Snippet de WordPress (Versión Ultra-Compacta).
+  Asegúrate de que tu plugin de snippets pueda procesar HTML, CSS (<style>) y JavaScript (<script>).
+-->
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+    .electrostática-simulator-snippet-wrapper {
+        font-family: 'Inter', sans-serif;
+        overscroll-behavior: none; 
+        margin: 1em auto; 
+        max-width: 780px; 
+        border: 1px solid #cbd5e1; 
+        border-radius: 0.75rem; 
+        background-color: #f8fafc; 
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); 
+        overflow: hidden; 
+    }
+
+    /* --- ESTILOS ESPECÍFICOS PARA ENCABEZADOS (para intentar sobrescribir Astra) --- */
+    .electrostática-simulator-snippet-wrapper h1 {
+        color: #1e3a8a;
+        /* Tamaños de fuente explícitos. Ajusta según necesites. */
+        /* Si Astra sigue sobrescribiendo, puedes probar a añadir !important, ej: font-size: 1.25rem !important; */
+        font-size: 1.25rem; /* Equivalente a text-xl de Tailwind por defecto */
+        font-weight: 600; /* Equivalente a font-semibold de Tailwind */
+        text-align: center;
+    }
+    .electrostática-simulator-snippet-wrapper h2 {
+        color: #1e3a8a;
+        font-size: 1.125rem; /* Equivalente a text-lg de Tailwind por defecto */
+        font-weight: 500; /* Equivalente a font-medium de Tailwind */
+    }
+    .electrostática-simulator-snippet-wrapper h3 {
+        color: #1e40af; /* Un azul ligeramente diferente para h3 si se desea */
+        font-size: 0.875rem; /* Equivalente a text-sm de Tailwind por defecto */
+        font-weight: 500; 
+        text-align: center;
+    }
+
+    /* Ajustes para pantallas pequeñas (sm y md) si usaste clases responsivas de Tailwind en los H */
+    @media (min-width: 640px) { /* sm */
+        .electrostática-simulator-snippet-wrapper h1 { font-size: 1.5rem; } /* text-2xl */
+        .electrostática-simulator-snippet-wrapper h2 { font-size: 1.25rem; } /* text-xl */
+        .electrostática-simulator-snippet-wrapper h3 { font-size: 1rem; }    /* text-base */
+    }
+    @media (min-width: 768px) { /* md */
+        .electrostática-simulator-snippet-wrapper h1 { font-size: 1.875rem; } /* text-3xl */
+        /* Mantener h2 y h3 como en sm o ajustarlos más si es necesario */
+    }
+    /* --- FIN DE ESTILOS ESPECÍFICOS PARA ENCABEZADOS --- */
+
+    .electrostática-simulator-snippet-wrapper input[type="range"]::-webkit-slider-runnable-track {
+        height: 6px; 
+        background: #e2e8f0; 
+        border-radius: 9999px; 
+    }
+    .electrostática-simulator-snippet-wrapper input[type="range"]::-moz-range-track {
+        height: 6px;
+        background: #e2e8f0;
+        border-radius: 9999px;
+    }
+    .electrostática-simulator-snippet-wrapper input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 16px; 
+        height: 16px;
+        background: #2563eb; 
+        border-radius: 50%;
+        cursor: pointer;
+        margin-top: -5px; 
+        border: 2px solid white;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.1); 
+    }
+    .electrostática-simulator-snippet-wrapper input[type="range"]::-moz-range-thumb {
+        width: 16px;
+        height: 16px;
+        background: #2563eb;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 2px solid white;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+    .electrostática-simulator-snippet-wrapper canvas {
+        border: 1px solid #e2e8f0; 
+        touch-action: none; 
+        background-color: #fff; 
+        width: 100%; 
+        aspect-ratio: 1 / 1; 
+        border-radius: 0.375rem; 
+    }
+    .electrostática-simulator-snippet-wrapper .value-badge {
+        display: inline-block;
+        padding: 1px 5px; 
+        border-radius: 0.25rem;
+        font-weight: 500; 
+        font-size: 0.7rem; 
+    }
+    .electrostática-simulator-snippet-wrapper .info-text {
+        font-size: 0.7rem; 
+        color: #475569; 
+    }
+    .electrostática-simulator-snippet-wrapper label {
+        font-size: 0.8rem; 
+        margin-bottom: 0.125rem; 
+    }
+</style>
+
+<div class="electrostática-simulator-snippet-wrapper">
+    <header class="bg-slate-100 p-3 sm:p-4 border-b border-slate-300">
+        <h1>Simulador de Campo Eléctrico</h1>
+    </header>
+
+    <div class="p-3 sm:p-4">
+        <div class="mb-3 sm:mb-4 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+            <div class="bg-slate-50 p-2 sm:p-3 rounded-md shadow-sm">
+                <h2 class="mb-2 text-center sm:text-left">Parámetros</h2>
+                <div class="mb-2">
+                    <label for="chargeQSim" class="block text-slate-700">
+                        Carga Q (<span class="value-badge bg-blue-100 text-blue-700" id="chargeQLabelSim">&micro;C</span>):
+                        <span id="chargeQValueSim" class="font-semibold text-blue-600"></span>
+                    </label>
+                    <input type="range" id="chargeQSim" min="-20" max="20" value="6" step="0.1" class="w-full cursor-pointer mt-1">
+                </div>
+                <div>
+                    <label for="radiusRSim" class="block text-slate-700">
+                        Radio R (<span class="value-badge bg-green-100 text-green-700">m</span>):
+                        <span id="radiusRValueSim" class="font-semibold text-green-600"></span>
+                    </label>
+                    <input type="range" id="radiusRSim" min="0.05" max="0.4" value="0.2" step="0.01" class="w-full cursor-pointer mt-1">
+                </div>
+            </div>
+
+            <div class="bg-slate-50 p-2 sm:p-3 rounded-md shadow-sm flex flex-col justify-center">
+                <h2 class="mb-2 text-center sm:text-left">Valores Calculados</h2>
+                <p class="text-xs sm:text-sm text-slate-700 mb-1">
+                    Distancia r:
+                    <span id="distanceRDisplaySim" class="font-semibold text-indigo-600 value-badge bg-indigo-100">0.000 m</span>
+                </p>
+                <p class="text-xs sm:text-sm text-slate-700">
+                    Campo E:
+                    <span id="electricFieldEDisplaySim" class="font-semibold text-indigo-600 value-badge bg-indigo-100">0.00 N/C</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+            <div class="bg-white p-2 rounded-lg shadow-md">
+                <h3 class="mb-1">Visualización Interactiva</h3>
+                <canvas id="simulationCanvasSim"></canvas> 
+            </div>
+            <div class="bg-white p-2 rounded-lg shadow-md">
+                <h3 class="mb-1">Gráfica E vs. r</h3>
+                <canvas id="graphCanvasSim"></canvas> 
+            </div>
+        </div>
+
+         <footer class="mt-3 sm:mt-4 text-center info-text">
+            <p>Mueve el cursor/dedo en la "Visualización Interactiva" para seleccionar 'r'. k &approx; 8.99 &times; 10<sup>9</sup> N&middot;m<sup>2</sup>/C<sup>2</sup>.</p>
+        </footer>
+    </div>
+</div>
+
+<script>
+(function() {
+    const simCanvasEl = document.getElementById('simulationCanvasSim');
+    const graphCanvasEl = document.getElementById('graphCanvasSim');
+
+    if (!simCanvasEl || !graphCanvasEl) {
+        // console.warn('Simulador Electrostático: Elementos canvas no encontrados.');
+        return;
+    }
+
+    const K_COULOMB = 8.9875517923e9; 
+
+    const chargeQSlider = document.getElementById('chargeQSim');
+    const radiusRSlider = document.getElementById('radiusRSim');
+    const chargeQValueDisplay = document.getElementById('chargeQValueSim');
+    const radiusRValueDisplay = document.getElementById('radiusRValueSim');
+    const distanceRDisplay = document.getElementById('distanceRDisplaySim');
+    const electricFieldEDisplay = document.getElementById('electricFieldEDisplaySim');
+
+    const simCtx = simCanvasEl.getContext('2d');
+    const graphCtx = graphCanvasEl.getContext('2d');
+
+    let chargeQ_C = parseFloat(chargeQSlider.value) * 1e-6; 
+    let radiusR_m = parseFloat(radiusRSlider.value);       
+    let testPointR_m = radiusR_m / 2;                      
+    let mousePosSim = { x: 0, y: 0, active: false, initialSetupDone: false };       
+
+    const MAX_VISUAL_RANGE_M = 0.5; 
+    const GRAPH_MAX_R_M = 0.6;      
+    const GRAPH_PADDING = 30; 
+    const GRAPH_AXIS_FONT_SIZE = 8; 
+
+    function formatScientific(num, precision = 1) { 
+        if (num === 0) return "0.0";
+        if ((Math.abs(num) < 1e-1 && num !== 0) || Math.abs(num) >= 1e3) { 
+            return num.toExponential(precision);
+        }
+        return num.toFixed(precision + 1); 
+    }
+
+    function drawArrow(ctx, fromX, fromY, toX, toY, color = 'black', lineWidth = 1.5, arrowHeadSize = 6) { 
+        const dx = toX - fromX;
+        const dy = toY - fromY;
+        if (Math.abs(dx) < 0.1 && Math.abs(dy) < 0.1) return; 
+        const angle = Math.atan2(dy, dx);
+        
+        ctx.save();
+        ctx.strokeStyle = color;
+        ctx.fillStyle = color;
+        ctx.lineWidth = lineWidth;
+
+        ctx.beginPath();
+        ctx.moveTo(fromX, fromY);
+        ctx.lineTo(toX, toY);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(toX, toY);
+        ctx.lineTo(toX - arrowHeadSize * Math.cos(angle - Math.PI / 6), toY - arrowHeadSize * Math.sin(angle - Math.PI / 6));
+        ctx.lineTo(toX - arrowHeadSize * Math.cos(angle + Math.PI / 6), toY - arrowHeadSize * Math.sin(angle + Math.PI / 6));
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+    }
+    
+    function calculateElectricField(Q_C, R_m, r_m) {
+        if (R_m <= 0) return 0; 
+        if (Q_C === 0) return 0;
+        const abs_r_m = Math.abs(r_m); 
+        if (abs_r_m < R_m) {
+            return (K_COULOMB * Q_C * abs_r_m) / (R_m ** 3);
+        } else {
+            return (K_COULOMB * Q_C) / (abs_r_m ** 2);
+        }
+    }
+
+    function drawSimulation() {
+        if (!simCtx || simCanvasEl.width === 0 || simCanvasEl.height === 0) return;
+        simCtx.clearRect(0, 0, simCanvasEl.width, simCanvasEl.height);
+        const simCenterX = simCanvasEl.width / 2;
+        const simCenterY = simCanvasEl.height / 2;
+        const simScale = Math.min(simCanvasEl.width, simCanvasEl.height) / (2 * MAX_VISUAL_RANGE_M);
+        if (simScale <= 0) return;
+
+        simCtx.beginPath();
+        simCtx.arc(simCenterX, simCenterY, radiusR_m * simScale, 0, 2 * Math.PI);
+        simCtx.fillStyle = chargeQ_C > 0 ? 'rgba(255, 100, 100, 0.25)' : (chargeQ_C < 0 ? 'rgba(100, 100, 255, 0.25)' : 'rgba(128,128,128,0.25)');
+        simCtx.fill();
+        simCtx.strokeStyle = chargeQ_C > 0 ? 'rgb(200, 50, 50)' : (chargeQ_C < 0 ? 'rgb(50, 50, 200)' : 'rgb(100,100,100)');
+        simCtx.lineWidth = 1.2; 
+        simCtx.stroke();
+        
+        simCtx.strokeStyle = '#ddd'; 
+        simCtx.lineWidth = 0.4;
+        simCtx.beginPath();
+        simCtx.moveTo(0, simCenterY); simCtx.lineTo(simCanvasEl.width, simCenterY); 
+        simCtx.moveTo(simCenterX, 0); simCtx.lineTo(simCenterX, simCanvasEl.height); 
+        simCtx.stroke();
+
+        if (mousePosSim.active) {
+            const dx_mouse_center = mousePosSim.x - simCenterX;
+            const dy_mouse_center = mousePosSim.y - simCenterY;
+            const dist_pixels_from_center = Math.sqrt(dx_mouse_center**2 + dy_mouse_center**2);
+            
+            testPointR_m = dist_pixels_from_center / simScale;
+            if (testPointR_m > MAX_VISUAL_RANGE_M * 1.5) testPointR_m = MAX_VISUAL_RANGE_M * 1.5; 
+
+            const E = calculateElectricField(chargeQ_C, radiusR_m, testPointR_m);
+
+            simCtx.beginPath();
+            simCtx.arc(mousePosSim.x, mousePosSim.y, 3.5, 0, 2 * Math.PI); 
+            simCtx.fillStyle = 'rgb(55,65,81)'; 
+            simCtx.fill();
+
+            if (Math.abs(E) > 1e-3 && dist_pixels_from_center > 1e-3) { 
+                let arrowLengthScaleFactor = 0.015 * simScale; 
+                let arrowLengthPixels = Math.abs(E) * arrowLengthScaleFactor;
+                arrowLengthPixels = Math.max(7, Math.min(arrowLengthPixels, simCanvasEl.width / 5.5)); 
+
+                const unitVecX = dist_pixels_from_center === 0 ? 0 : dx_mouse_center / dist_pixels_from_center;
+                const unitVecY = dist_pixels_from_center === 0 ? 0 : dy_mouse_center / dist_pixels_from_center;
+                
+                const signFactor = E >= 0 ? 1 : -1; 
+                
+                const arrowEndX = mousePosSim.x + unitVecX * arrowLengthPixels * signFactor;
+                const arrowEndY = mousePosSim.y + unitVecY * arrowLengthPixels * signFactor;
+                
+                const arrowColor = E > 0 ? 'rgb(220, 38, 38)' : 'rgb(37, 99, 235)'; 
+                drawArrow(simCtx, mousePosSim.x, mousePosSim.y, arrowEndX, arrowEndY, arrowColor);
+            }
+        }
+    }
+
+    function drawGraph() {
+        if (!graphCtx || graphCanvasEl.width === 0 || graphCanvasEl.height === 0) return;
+        graphCtx.clearRect(0, 0, graphCanvasEl.width, graphCanvasEl.height);
+
+        const N_POINTS_GRAPH = 120; 
+        const r_step = GRAPH_MAX_R_M / N_POINTS_GRAPH;
+
+        let max_E_abs_val = Math.abs(calculateElectricField(chargeQ_C, radiusR_m, radiusR_m));
+        if (chargeQ_C === 0 || radiusR_m <= 0) max_E_abs_val = 1e4;
+        if (max_E_abs_val < 1e3 && chargeQ_C !== 0) max_E_abs_val = 1e3;
+        if (chargeQ_C === 0) max_E_abs_val = 1e4;
+
+        const graphWidth = graphCanvasEl.width - 2 * GRAPH_PADDING;
+        const graphHeight = graphCanvasEl.height - 2 * GRAPH_PADDING;
+        if (graphWidth <= 0 || graphHeight <= 0) return;
+
+        graphCtx.strokeStyle = '#9ca3af'; 
+        graphCtx.lineWidth = 0.7; 
+        graphCtx.font = `${GRAPH_AXIS_FONT_SIZE}px Inter`;
+
+        graphCtx.beginPath();
+        graphCtx.moveTo(GRAPH_PADDING, GRAPH_PADDING); 
+        graphCtx.lineTo(GRAPH_PADDING, graphCanvasEl.height - GRAPH_PADDING); 
+        graphCtx.lineTo(graphCanvasEl.width - GRAPH_PADDING, graphCanvasEl.height - GRAPH_PADDING); 
+        graphCtx.stroke();
+
+        graphCtx.fillStyle = '#374151'; 
+        graphCtx.textAlign = 'center';
+        graphCtx.fillText('r (m)', GRAPH_PADDING + graphWidth / 2, graphCanvasEl.height - GRAPH_PADDING / 3); 
+        graphCtx.save();
+        graphCtx.translate(GRAPH_PADDING / 3.5, GRAPH_PADDING + graphHeight / 2); 
+        graphCtx.rotate(-Math.PI / 2);
+        graphCtx.fillText('E (N/C)', 0, 0);
+        graphCtx.restore();
+
+        const numTicksR = Math.max(2, Math.min(4, Math.floor(graphWidth / 40))); 
+        for (let i = 0; i <= numTicksR; i++) {
+            const r_val = (GRAPH_MAX_R_M / numTicksR) * i;
+            const x = GRAPH_PADDING + (r_val / GRAPH_MAX_R_M) * graphWidth;
+            graphCtx.beginPath();
+            graphCtx.moveTo(x, graphCanvasEl.height - GRAPH_PADDING - 2); 
+            graphCtx.lineTo(x, graphCanvasEl.height - GRAPH_PADDING + 2);
+            graphCtx.stroke();
+            graphCtx.fillText(r_val.toFixed(1), x, graphCanvasEl.height - GRAPH_PADDING + GRAPH_AXIS_FONT_SIZE + 2); 
+        }
+        
+        const numTicksE = Math.max(2, Math.min(3, Math.floor(graphHeight / 30))); 
+        graphCtx.textAlign = 'right';
+        for (let i = 0; i <= numTicksE; i++) {
+            let e_val_plot;
+            if (chargeQ_C === 0) e_val_plot = 0;
+            else if (chargeQ_C > 0) e_val_plot = (max_E_abs_val / numTicksE) * i;
+            else e_val_plot = -(max_E_abs_val / numTicksE) * i;
+            
+            let y;
+            if (chargeQ_C === 0) y = graphCanvasEl.height - GRAPH_PADDING;
+            else if (chargeQ_C > 0) y = (graphCanvasEl.height - GRAPH_PADDING) - (e_val_plot / max_E_abs_val) * graphHeight;
+            else y = GRAPH_PADDING - (e_val_plot / max_E_abs_val) * graphHeight;
+            
+            graphCtx.beginPath();
+            graphCtx.moveTo(GRAPH_PADDING - 2, y); 
+            graphCtx.lineTo(GRAPH_PADDING + 2, y);
+            graphCtx.stroke();
+            graphCtx.fillText(formatScientific(e_val_plot,0), GRAPH_PADDING - 3, y + (GRAPH_AXIS_FONT_SIZE/3)); 
+        }
+        graphCtx.textAlign = 'center'; 
+
+        graphCtx.beginPath();
+        graphCtx.strokeStyle = '#059669'; 
+        graphCtx.lineWidth = 1.2; 
+
+        for (let i = 0; i <= N_POINTS_GRAPH; i++) {
+            const r_plot = i * r_step;
+            const E_plot = calculateElectricField(chargeQ_C, radiusR_m, r_plot);
+            const x = GRAPH_PADDING + (r_plot / GRAPH_MAX_R_M) * graphWidth;
+            let y;
+            if (chargeQ_C === 0) y = graphCanvasEl.height - GRAPH_PADDING;
+            else if (chargeQ_C > 0) y = (graphCanvasEl.height - GRAPH_PADDING) - (E_plot / max_E_abs_val) * graphHeight;
+            else y = GRAPH_PADDING - (E_plot / max_E_abs_val) * graphHeight;
+            if (i === 0) graphCtx.moveTo(x, y);
+            else graphCtx.lineTo(x, y);
+        }
+        graphCtx.stroke();
+
+        if (radiusR_m <= GRAPH_MAX_R_M) {
+            const r_sphere_x = GRAPH_PADDING + (radiusR_m / GRAPH_MAX_R_M) * graphWidth;
+            graphCtx.beginPath();
+            graphCtx.setLineDash([2, 2]); 
+            graphCtx.strokeStyle = '#7c3aed'; 
+            graphCtx.moveTo(r_sphere_x, GRAPH_PADDING);
+            graphCtx.lineTo(r_sphere_x, graphCanvasEl.height - GRAPH_PADDING);
+            graphCtx.stroke();
+            graphCtx.setLineDash([]);
+            graphCtx.fillStyle = '#7c3aed';
+            graphCtx.fillText('R', r_sphere_x, GRAPH_PADDING - 3); 
+        }
+
+        if (mousePosSim.active && testPointR_m <= GRAPH_MAX_R_M) {
+            const E_current = calculateElectricField(chargeQ_C, radiusR_m, testPointR_m);
+            const current_r_x = GRAPH_PADDING + (testPointR_m / GRAPH_MAX_R_M) * graphWidth;
+            let current_e_y;
+            if (chargeQ_C === 0) current_e_y = graphCanvasEl.height - GRAPH_PADDING;
+            else if (chargeQ_C > 0) current_e_y = (graphCanvasEl.height - GRAPH_PADDING) - (E_current / max_E_abs_val) * graphHeight;
+            else current_e_y = GRAPH_PADDING - (E_current / max_E_abs_val) * graphHeight;
+            graphCtx.beginPath();
+            graphCtx.arc(current_r_x, current_e_y, 3.5, 0, 2 * Math.PI); 
+            graphCtx.fillStyle = '#db2777'; 
+            graphCtx.fill();
+        }
+    }
+
+    function updateDisplays() {
+        if(chargeQValueDisplay) chargeQValueDisplay.textContent = `${parseFloat(chargeQSlider.value).toFixed(1)}`;
+        if(radiusRValueDisplay) radiusRValueDisplay.textContent = `${parseFloat(radiusRSlider.value).toFixed(2)}`;
+        
+        const E_current = calculateElectricField(chargeQ_C, radiusR_m, testPointR_m);
+        if(distanceRDisplay) distanceRDisplay.textContent = `${testPointR_m.toFixed(3)} m`;
+        if(electricFieldEDisplay) electricFieldEDisplay.textContent = `${formatScientific(E_current)} N/C`;
+    }
+
+    function mainLoop() {
+        drawSimulation();
+        drawGraph();
+        updateDisplays();
+    }
+    
+    function handleCanvasInteraction(event) {
+        event.preventDefault(); 
+        const rect = simCanvasEl.getBoundingClientRect();
+        let clientX, clientY;
+        if (event.touches && event.touches.length > 0) {
+            clientX = event.touches[0].clientX;
+            clientY = event.touches[0].clientY;
+        } else {
+            clientX = event.clientX;
+            clientY = event.clientY;
+        }
+        mousePosSim.x = clientX - rect.left;
+        mousePosSim.y = clientY - rect.top;
+        mainLoop();
+    }
+
+    function stopCanvasInteraction() { /* No action */ }
+
+    function resizeCanvases() {
+        const simContainer = simCanvasEl.parentElement;
+        const graphContainer = graphCanvasEl.parentElement;
+
+        if (simContainer) {
+             const simPaddingX = parseInt(getComputedStyle(simContainer).paddingLeft) + parseInt(getComputedStyle(simContainer).paddingRight);
+             simCanvasEl.width = Math.max(50, simContainer.clientWidth - simPaddingX);
+             simCanvasEl.height = simCanvasEl.width; 
+        }
+        if (graphContainer) {
+            const graphPaddingX = parseInt(getComputedStyle(graphContainer).paddingLeft) + parseInt(getComputedStyle(graphContainer).paddingRight);
+            graphCanvasEl.width = Math.max(50, graphContainer.clientWidth - graphPaddingX);
+            graphCanvasEl.height = graphCanvasEl.width; 
+        }
+        
+        if (!mousePosSim.initialSetupDone && simCanvasEl.width > 0) {
+            const simCenterX = simCanvasEl.width / 2;
+            const simCenterY = simCanvasEl.height / 2;
+            const simScale = Math.min(simCanvasEl.width, simCanvasEl.height) / (2 * MAX_VISUAL_RANGE_M);
+            if (simScale > 0) {
+                mousePosSim.x = simCenterX + (radiusR_m / 2) * simScale;
+                mousePosSim.y = simCenterY;
+                testPointR_m = radiusR_m / 2;
+                mousePosSim.active = true; 
+            }
+            mousePosSim.initialSetupDone = true;
+        }
+        mainLoop();
+    }
+
+    if (chargeQSlider) {
+        chargeQSlider.addEventListener('input', () => {
+            chargeQ_C = parseFloat(chargeQSlider.value) * 1e-6;
+            mainLoop();
+        });
+    }
+
+    if (radiusRSlider) {
+        radiusRSlider.addEventListener('input', () => {
+            radiusR_m = parseFloat(radiusRSlider.value);
+            mainLoop();
+        });
+    }
+
+    if (simCanvasEl) {
+        simCanvasEl.addEventListener('mousedown', (e) => { mousePosSim.active = true; handleCanvasInteraction(e); });
+        simCanvasEl.addEventListener('mousemove', (e) => { if(mousePosSim.active) handleCanvasInteraction(e); });
+        simCanvasEl.addEventListener('mouseup', stopCanvasInteraction);
+        simCanvasEl.addEventListener('touchstart', (e) => { mousePosSim.active = true; handleCanvasInteraction(e); });
+        simCanvasEl.addEventListener('touchmove', (e) => { if(mousePosSim.active) handleCanvasInteraction(e); });
+        simCanvasEl.addEventListener('touchend', stopCanvasInteraction);
+    }
+
+    window.addEventListener('resize', resizeCanvases);
+    
+    function initializeSimulator() {
+        if (!chargeQSlider || !radiusRSlider) { 
+            // console.warn('Simulador Electrostático: Sliders no encontrados.');
+        } else {
+            chargeQ_C = parseFloat(chargeQSlider.value) * 1e-6; 
+            radiusR_m = parseFloat(radiusRSlider.value);   
+        }
+        mousePosSim.initialSetupDone = false; 
+        resizeCanvases(); 
+    }
+
+    if (document.readyState === "complete" || (document.readyState !== "loading" && !document.documentElement.doScroll)) {
+      initializeSimulator();
+    } else {
+      document.addEventListener('DOMContentLoaded', initializeSimulator);
+    }
+
+})();
+</script>
